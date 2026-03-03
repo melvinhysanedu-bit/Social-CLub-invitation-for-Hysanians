@@ -4,184 +4,241 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Melvin's Social Club</title>
+
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #fff8f0;
-    margin: 0;
-    padding: 0;
-  }
-  section {
-    display: none;
-    padding: 50px 20px;
-  }
-  #password-section {
-    display: block;
-    margin-top: 100px;
-  }
-  input[type="password"] {
-    padding: 10px;
-    font-size: 16px;
-  }
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-left: 10px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-  }
-  .error {
-    color: red;
-    margin-top: 10px;
-  }
-  /* Invitation Styles */
-  .love {
-    font-size: 50px;
-    color: red;
-    margin-top: 30px;
-    animation: heartbeat 1s infinite;
-  }
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-  }
-  img.speaking {
-    max-width: 200px;
-    margin-top: 20px;
-    border-radius: 10px;
-    animation: float 2s infinite alternate;
-  }
-  @keyframes float {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-10px); }
-  }
-  .icons {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  .icon {
-    width: 100px;
-    height: 100px;
-    background: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 30px;
-    border-radius: 10px;
-    transition: transform 0.3s, background 0.3s;
-  }
-  .icon:hover {
-    transform: scale(1.2);
-    background: #ccc;
-  }
-  .options {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    display: none;
-  }
-  .options button {
-    width: 250px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
-  }
-  #robotMessage {
-    margin-top: 30px;
-    font-size: 22px;
-    color: green;
-    display: none;
-    animation: robotTalk 1s infinite alternate;
-  }
-  @keyframes robotTalk {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(5px); }
-    100% { transform: translateX(-5px); }
-  }
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  text-align:center;
+  background: linear-gradient(to right, #fff0f5, #fff8f0);
+  overflow-x:hidden;
+}
+
+section{ display:none; padding:40px 20px; }
+#password-section{ display:block; margin-top:120px; }
+
+input{
+  padding:10px;
+  font-size:16px;
+}
+
+button{
+  padding:10px 20px;
+  font-size:16px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.error{ color:red; margin-top:10px; }
+
+/* Envelope */
+.envelope{
+  font-size:120px;
+  cursor:pointer;
+  transition: transform 0.5s;
+}
+.envelope:hover{
+  transform: scale(1.1);
+}
+
+#touchText{
+  font-size:20px;
+  margin-top:10px;
+  color:#555;
+}
+
+/* Letter */
+.letter{
+  max-width:700px;
+  margin:20px auto;
+  background:white;
+  padding:30px;
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  text-align:left;
+  line-height:1.6;
+  display:none;
+  animation: slideUp 1s ease forwards;
+}
+
+@keyframes slideUp{
+  from{ transform:translateY(200px); opacity:0; }
+  to{ transform:translateY(0); opacity:1; }
+}
+
+/* Congratulations Effect */
+.congrats{
+  font-size:40px;
+  color:gold;
+  display:none;
+  animation: pop 1s infinite alternate;
+}
+@keyframes pop{
+  from{ transform:scale(1); }
+  to{ transform:scale(1.2); }
+}
+
+/* Topic Section */
+.icons{
+  margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+.icon{
+  font-size:40px;
+  background:#ddd;
+  padding:20px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+.icon:hover{ transform:scale(1.2); }
+
+.options{
+  margin-top:20px;
+  display:none;
+  flex-direction:column;
+  gap:10px;
+  align-items:center;
+}
+
+#robotMessage{
+  display:none;
+  margin-top:20px;
+  font-size:22px;
+  color:green;
+}
+
 </style>
 </head>
 <body>
 
-<!-- Password Section -->
+<!-- PASSWORD SECTION -->
 <section id="password-section">
-  <h1>Enter the Club Password</h1>
-  <input type="password" id="password" placeholder="Enter Password"/>
-  <button onclick="checkPassword()">Enter</button>
-  <div id="error" class="error"></div>
+<h1>Enter the Club Password</h1>
+<input type="password" id="password" placeholder="Enter Password">
+<button onclick="checkPassword()">Enter</button>
+<div class="error" id="error"></div>
 </section>
 
-<!-- Invitation Section -->
+<!-- INVITATION SECTION -->
 <section id="invitation-section">
-  <h1>💌 Welcome to Melvin's Social Club 💌</h1>
-  <div class="love">❤️</div>
-  <!-- Speaking photo GIF -->
-  <img src="https://i.gifer.com/origin/2b/2b3e8a0a6d18c56c82431f16429f1d5f.gif" alt=>
 
-  <h2>Guess the Topic</h2>
-  <div class="icons">
-    <div class="icon" onclick="showOptions()">🤖</div>
-    <div class="icon" onclick="showOptions()">🌿</div>
-    <div class="icon" onclick="showOptions()">🎨</div>
-  </div>
+<h1>💌 Social Club Invitation 💌</h1>
 
-  <div class="options" id="options">
-    <button onclick="checkAnswer(this, true)">AI - Benefits & Risks</button>
-    <button onclick="checkAnswer(this, false)">Space Exploration</button>
-    <button onclick="checkAnswer(this, false)">Music Trends</button>
-  </div>
+<div class="envelope" onclick="openEnvelope()">✉️</div>
+<div id="touchText">Touch Me</div>
 
-  <div id="robotMessage">🤖 Welcome to Melvin's Club!</div>
+<div class="congrats" id="congratsText">🎉 Congratulations! 🎉</div>
+
+<div class="letter" id="letter">
+
+<h2>Congratulations!</h2>
+
+<p><strong>Dear Hysanians,</strong></p>
+
+<p>I am very pleased and excited to warmly invite you to join the <strong>Social Club – Higher Level.</strong></p>
+
+<p>This invitation is a special opportunity for those who are ready to grow, challenge themselves, and take their speaking skills to the next level. You have already shown effort, potential, and the ability to improve. Now, it is time to go further.</p>
+
+<p>The Social Club – Higher Level is designed especially to boost your speaking confidence, fluency, and communication skills. In this club, you will:</p>
+
+<ul>
+<li>Practice speaking more confidently in front of others</li>
+<li>Improve your vocabulary and sentence structure</li>
+<li>Participate in meaningful discussions and debates</li>
+<li>Share your opinions clearly and respectfully</li>
+<li>Build leadership and teamwork skills</li>
+</ul>
+
+<p>This is not just about speaking English. It is about finding your voice. It is about learning to express your ideas with confidence. It is about becoming brave enough to speak without fear.</p>
+
+<p>Remember, confidence does not come from being perfect — it comes from practicing, trying, and improving every day. The more you speak, the stronger you become.</p>
+
+<p>The Higher Level Social Club will challenge you, but it will also support you. You will be surrounded by motivated students who want to grow just like you. Together, we will create a positive environment where everyone feels encouraged to speak and improve.</p>
+
+<p>I truly believe that each of you has great potential. This club is your opportunity to unlock it.</p>
+
+<p>You are warmly invited to take this step forward. Be brave. Be confident. Be ready to grow.</p>
+
+<p>I look forward to seeing you shine in the Social Club – Higher Level.</p>
+
+<p><strong>With encouragement and pride,</strong><br>
+Tr. Melvin</p>
+
+<button onclick="showTopic()">Continue ➜</button>
+
+</div>
+
+<!-- GUESS TOPIC SECTION -->
+<div id="topicSection" style="display:none;">
+
+<h2>Guess the Topic</h2>
+
+<div class="icons">
+<div class="icon" onclick="showOptions()">🤖</div>
+<div class="icon" onclick="showOptions()">🌿</div>
+<div class="icon" onclick="showOptions()">🎨</div>
+</div>
+
+<div class="options" id="options">
+<button onclick="checkAnswer(this,true)">AI - Benefits & Risks</button>
+<button onclick="checkAnswer(this,false)">Space Exploration</button>
+<button onclick="checkAnswer(this,false)">Music Trends</button>
+</div>
+
+<div id="robotMessage">🤖 Welcome to Melvin's Social Club!</div>
+
+</div>
+
 </section>
 
 <script>
-  // Password check
-  function checkPassword() {
-    const password = document.getElementById('password').value;
-    if(password === "Hysanian") {
-      document.getElementById('password-section').style.display = "none";
-      document.getElementById('invitation-section').style.display = "block";
-    } else {
-      document.getElementById('error').textContent = "Incorrect password!";
-    }
-  }
 
-  // Show options when icon clicked
-  function showOptions() {
-    document.getElementById('options').style.display = "flex";
+function checkPassword(){
+  if(document.getElementById("password").value==="Hysanian"){
+    document.getElementById("password-section").style.display="none";
+    document.getElementById("invitation-section").style.display="block";
+  }else{
+    document.getElementById("error").innerText="Incorrect password!";
   }
+}
 
-  // Check answer
-  function checkAnswer(btn, isCorrect) {
-    if(isCorrect) {
-      btn.style.backgroundColor = "green";
-      document.getElementById('robotMessage').style.display = "block";
-      speakMessage("Welcome to Melvin's Social Club!");
-      document.querySelectorAll('.options button').forEach(b => b.disabled = true);
-    } else {
-      btn.style.backgroundColor = "red";
-    }
-  }
+function openEnvelope(){
+  document.querySelector(".envelope").innerText="📬";
+  document.getElementById("touchText").style.display="none";
+  document.getElementById("congratsText").style.display="block";
+  document.getElementById("letter").style.display="block";
+}
 
-  // Speak the robot message using Web Speech API
-  function speakMessage(message) {
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(message);
-      utterance.lang = 'en-US';
-      utterance.rate = 1; // speaking speed
-      window.speechSynthesis.speak(utterance);
-    } else {
-      console.log("Your browser does not support speech synthesis.");
-    }
+function showTopic(){
+  document.getElementById("topicSection").style.display="block";
+}
+
+function showOptions(){
+  document.getElementById("options").style.display="flex";
+}
+
+function checkAnswer(btn,correct){
+  if(correct){
+    btn.style.background="green";
+    document.getElementById("robotMessage").style.display="block";
+    speakMessage("Welcome to Melvin's Social Club!");
+  }else{
+    btn.style.background="red";
   }
+}
+
+function speakMessage(message){
+  if('speechSynthesis' in window){
+    let speech=new SpeechSynthesisUtterance(message);
+    speech.lang='en-US';
+    window.speechSynthesis.speak(speech);
+  }
+}
+
 </script>
 
 </body>
