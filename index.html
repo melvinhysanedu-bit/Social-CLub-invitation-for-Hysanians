@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melvin's Social Club</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #fff8f0;
+    margin: 0;
+    padding: 0;
+  }
+  section {
+    display: none;
+    padding: 50px 20px;
+  }
+  #password-section {
+    display: block;
+    margin-top: 100px;
+  }
+  input[type="password"] {
+    padding: 10px;
+    font-size: 16px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+  }
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+  /* Invitation Styles */
+  .love {
+    font-size: 50px;
+    color: red;
+    margin-top: 30px;
+    animation: heartbeat 1s infinite;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+  }
+  img.speaking {
+    max-width: 200px;
+    margin-top: 20px;
+    border-radius: 10px;
+    animation: float 2s infinite alternate;
+  }
+  @keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+  }
+  .icons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .icon {
+    width: 100px;
+    height: 100px;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 30px;
+    border-radius: 10px;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .icon:hover {
+    transform: scale(1.2);
+    background: #ccc;
+  }
+  .options {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    display: none;
+  }
+  .options button {
+    width: 250px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+  #robotMessage {
+    margin-top: 30px;
+    font-size: 22px;
+    color: green;
+    display: none;
+    animation: robotTalk 1s infinite alternate;
+  }
+  @keyframes robotTalk {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+    100% { transform: translateX(-5px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Password Section -->
+<section id="password-section">
+  <h1>Enter the Club Password</h1>
+  <input type="password" id="password" placeholder="Enter Password"/>
+  <button onclick="checkPassword()">Enter</button>
+  <div id="error" class="error"></div>
+</section>
+
+<!-- Invitation Section -->
+<section id="invitation-section">
+  <h1>💌 Welcome to Melvin's Social Club 💌</h1>
+  <div class="love">❤️</div>
+  <!-- Speaking photo GIF -->
+  <img src="https://i.gifer.com/origin/2b/2b3e8a0a6d18c56c82431f16429f1d5f.gif" alt="Speaking Robot" class="speaking">
+
+  <h2>Guess the Topic</h2>
+  <div class="icons">
+    <div class="icon" onclick="showOptions()">🤖</div>
+    <div class="icon" onclick="showOptions()">🌿</div>
+    <div class="icon" onclick="showOptions()">🎨</div>
+  </div>
+
+  <div class="options" id="options">
+    <button onclick="checkAnswer(this, true)">AI - Benefits & Risks</button>
+    <button onclick="checkAnswer(this, false)">Space Exploration</button>
+    <button onclick="checkAnswer(this, false)">Music Trends</button>
+  </div>
+
+  <div id="robotMessage">🤖 Welcome to Melvin's Club!</div>
+</section>
+
+<script>
+  // Password check
+  function checkPassword() {
+    const password = document.getElementById('password').value;
+    if(password === "Hysanian") {
+      document.getElementById('password-section').style.display = "none";
+      document.getElementById('invitation-section').style.display = "block";
+    } else {
+      document.getElementById('error').textContent = "Incorrect password!";
+    }
+  }
+
+  // Show options when icon clicked
+  function showOptions() {
+    document.getElementById('options').style.display = "flex";
+  }
+
+  // Check answer
+  function checkAnswer(btn, isCorrect) {
+    if(isCorrect) {
+      btn.style.backgroundColor = "green";
+      document.getElementById('robotMessage').style.display = "block";
+      speakMessage("Welcome to Melvin's Social Club!");
+      document.querySelectorAll('.options button').forEach(b => b.disabled = true);
+    } else {
+      btn.style.backgroundColor = "red";
+    }
+  }
+
+  // Speak the robot message using Web Speech API
+  function speakMessage(message) {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(message);
+      utterance.lang = 'en-US';
+      utterance.rate = 1; // speaking speed
+      window.speechSynthesis.speak(utterance);
+    } else {
+      console.log("Your browser does not support speech synthesis.");
+    }
+  }
+</script>
+
+</body>
+</html>
