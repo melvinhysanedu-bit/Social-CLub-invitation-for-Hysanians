@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hysan Education Student Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+        }
+
+        .container {
+            margin-top: 100px;
+        }
+
+        input, textarea {
+            padding: 8px;
+            margin: 5px;
+            width: 250px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #formSection, #successSection {
+            display: none;
+        }
+
+        .emoji {
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Section -->
+    <div class="container" id="loginSection">
+        <h2>Hysan Education Login</h2>
+        <input type="password" id="password" placeholder="Enter Password">
+        <br>
+        <button onclick="checkPassword()">Login</button>
+        <p id="error" style="color:red;"></p>
+    </div>
+
+    <!-- Registration Form Section -->
+    <div class="container" id="formSection">
+        <h2>Student Registration Form</h2>
+
+        <input type="text" id="name" placeholder="Enter Your Name" required><br>
+        <input type="number" id="age" placeholder="Enter Your Age" required><br>
+        <input type="text" id="hobby" placeholder="Enter Your Hobby" required><br>
+        <textarea id="education" placeholder="Enter Your Education Background" required></textarea><br>
+
+        <button onclick="submitForm()">Submit</button>
+    </div>
+
+    <!-- Success Section -->
+    <div class="container" id="successSection">
+        <h2>🎉 Congratulations! 🎉</h2>
+        <p>You have successfully registered!</p>
+        <div class="emoji">
+            🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉<br>
+            🥳🥳🥳🥳🥳🥳🥳🥳🥳🥳<br>
+            🎊🎊🎊🎊🎊🎊🎊🎊🎊🎊<br>
+            😄😄😄😄😄😄😄😄😄😄
+        </div>
+    </div>
+
+<script>
+    function checkPassword() {
+        var password = document.getElementById("password").value;
+        
+        if(password === "Melvin") {
+            document.getElementById("loginSection").style.display = "none";
+            document.getElementById("formSection").style.display = "block";
+        } else {
+            document.getElementById("error").innerText = "Incorrect Password!";
+        }
+    }
+
+    function submitForm() {
+        var name = document.getElementById("name").value;
+        var age = document.getElementById("age").value;
+        var hobby = document.getElementById("hobby").value;
+        var education = document.getElementById("education").value;
+
+        if(name && age && hobby && education) {
+            document.getElementById("formSection").style.display = "none";
+            document.getElementById("successSection").style.display = "block";
+        } else {
+            alert("Please fill in all fields!");
+        }
+    }
+</script>
+
+</body>
+</html>
